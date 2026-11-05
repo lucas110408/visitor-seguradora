@@ -1,0 +1,53 @@
+@startuml
+skinparam monochrome true
+skinparam style strictuml
+skinparam classBackgroundColor White
+skinparam backgroundColor White
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+
+interface Pessoa <<interface>> {
+  + aceitar(visitor : Visitor) : String
+}
+
+class Segurado {
+  - codigo : int
+  - nome : String
+  + aceitar(visitor : Visitor) : String
+}
+
+class Corretor {
+  - codigo : int
+  - nome : String
+  - registroSusep : String
+  + aceitar(visitor : Visitor) : String
+}
+
+class Funcionario {
+  - codigo : int
+  - nome : String
+  - salario : float
+  + aceitar(visitor : Visitor) : String
+}
+
+class Apolice {
+  - numero : String
+}
+
+interface Visitor <<interface>> {
+  + exibirSegurado(segurado : Segurado) : String
+  + exibirCorretor(corretor : Corretor) : String
+  + exibirFuncionario(funcionario : Funcionario) : String
+}
+
+class PessoaVisitor {
+  + exibir(pessoa : Pessoa) : String
+}
+
+Pessoa <|.. Segurado
+Pessoa <|.. Corretor
+Pessoa <|.. Funcionario
+Segurado --> "1" Apolice
+Visitor <|.. PessoaVisitor
+Pessoa ..> Visitor
+@enduml
